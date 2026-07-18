@@ -105,9 +105,6 @@ PRODUCT_PACKAGES += \
 
 $(call soong_config_set_bool,stagefright,target_disable_thumbnail_block_model,true)
 
-# Charger
-WITH_LINEAGE_CHARGER := false
-
 # Device ID attestation
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.software.device_id_attestation.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.device_id_attestation.xml
@@ -125,10 +122,6 @@ PRODUCT_PACKAGES += \
 # DRM
 PRODUCT_PACKAGES += \
     android.hardware.drm-service.clearkey
-
-# fastbootd
-PRODUCT_PACKAGES += \
-    fastbootd
 
 # GPS
 PRODUCT_PACKAGES += \
@@ -152,7 +145,8 @@ PRODUCT_PACKAGES += \
 
 # Health
 PRODUCT_PACKAGES += \
-    android.hardware.health-service.qti
+    android.hardware.health-service.qti \
+    android.hardware.health-service.qti_recovery
 
 # Init
 PRODUCT_PACKAGES += \
@@ -189,6 +183,9 @@ PRODUCT_PACKAGES += \
     init.qti.kernel.sh \
     init.qti.qcv.sh \
     vendor_modprobe.sh
+
+# ION
+$(call soong_config_set_bool,libion,legacy_impl,true)
 
 # IPACM
 PRODUCT_PACKAGES += \
@@ -338,7 +335,8 @@ PRODUCT_PACKAGES += \
 PRODUCT_SOONG_NAMESPACES += \
     $(LOCAL_PATH) \
     hardware/google/interfaces \
-    hardware/google/pixel \
+    hardware/google/pixel/pixelstats \
+    hardware/google/pixel/power-libperfmgr \
     hardware/lineage/interfaces/power-libperfmgr \
     hardware/motorola \
     hardware/qcom-caf/common/libqti-perfd-client
@@ -389,7 +387,9 @@ PRODUCT_PACKAGES += \
     init.qcom.usb.sh \
     usb_compositions.conf
 
-PRODUCT_SOONG_NAMESPACES += vendor/qcom/opensource/usb/etc
+PRODUCT_SOONG_NAMESPACES += \
+    vendor/qcom/opensource/usb/etc \
+    vendor/qcom/opensource/usb/hal
 
 # Vendor service manager
 PRODUCT_PACKAGES += \
